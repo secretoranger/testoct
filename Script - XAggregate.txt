@@ -1,0 +1,40 @@
+Net Profit
+
+SUMX of Profit =
+SUMX (
+    'Financials (n=688)',
+    'Financials (n=688)'[ Sales] - 'Financials (n=688)'[COGS]
+)
+
+Profit Loss
+
+SUMX Profit<_0 =
+SUMX (
+    FILTER ( 
+	'Financials (n=688)', 
+	'Financials (n=688)'[SUMX of Profit] <= 0 
+	),
+'Financials (n=688)'[SUMX of Profit]
+)
+
+Profit Gain
+
+SUMX Profit>0 = 
+SUMX (
+    FILTER ( 
+	'Financials (n=688)', 
+	'Financials (n=688)'[SUMX of Profit] > 0 
+	),
+'Financials (n=688)'[SUMX of Profit]
+)
+
+RANKX Product by Profit
+
+RANKX Product by Profit =
+RANKX ( 
+	ALL ( 'Financials (n=688)'[Product] ), 
+	[SUMX of Profit],
+	, 
+	DESC, 
+	DENSE 
+)
